@@ -4,7 +4,7 @@
   "description": "some api about store using Node.js, express, mongoose",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js --ignore logs"
   },
   "repository": {
     "type": "git",

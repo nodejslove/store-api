@@ -25,15 +25,15 @@ const productSchema = new Schema(
     company: {
       type: String,
       enum: {
-        values: ['ikea', 'liddy', 'caressa', 'macros'],
+        values: ['ikea', 'liddy', 'caressa', 'marcos'],
         message: '{VALUE} is not supported',
       },
-      //   enum: ['ikea', 'liddy', 'caressa', 'macros'],
+      //   enum: ['ikea', 'liddy', 'caressa', 'marcos'],
     },
-  },
-  {
-    timestamps: true,
   }
+  // {
+  //   timestamps: true,
+  // }
 );
 
 module.exports = model('Product', productSchema);

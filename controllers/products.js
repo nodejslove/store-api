@@ -10,8 +10,9 @@ const getAllProductsStatic = async (req, res, next) => {
   res.status(200).json({ products, nbHits: products.length });
 };
 const getAllProducts = async (req, res, next) => {
-  const { featured, company, name } = req.query;
+  const { featured, company, name, sort, fields } = req.query;
   const queryObject = {};
+  //#region filter
   if (featured) {
     queryObject.featured = featured === 'true' ? true : false;
   }
@@ -21,14 +22,29 @@ const getAllProducts = async (req, res, next) => {
   if (name) {
     queryObject.name = new RegExp(name, 'igm');
   }
-  const projection = {
-    name: 1,
-    price: 1,
-    company: 1,
-    featured: 1,
-    _id: -1,
-  };
-  const products = await Product.find(queryObject, projection);
+  //#endregion filter
+  let result = Product.find(queryObject);
+  //#region sort
+  if (sort) {
+    const sortList = sort
+      .split(',')
+      .map((sortItem) => sortItem.trim())
+      .join(' ');
+    result = result.sort(sortList);
+  } else {
+    result = result.sort('createdAt');
+  }
+  //#endregion sort
+  //#region fields
+  if (fields) {
+    const fieldsList = fields
+      .split(',')
+      .map((field) => field.trim())
+      .join(' ');
+    result = result.select(fieldsList);
+  }
+  //#endregion fields
+  const products = await result;
   res.json({ nbHits: products.length, products });
 };
 

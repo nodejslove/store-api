@@ -33,7 +33,9 @@ const port = process.env.PORT || 3000;
   try {
     const startTime = new Date();
     console.log('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
-    await connectDB(mongoURI);
+    const connection = await connectDB(mongoURI);
+    console.log(`\thost: ${connection.connection.host}`);
+    console.log(`\tDB name: ${connection.connection.name}`);
     console.log(`---> DB connected(${new Date() - startTime}ms)`);
     console.log('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
     app.listen(port, console.log(`Server is running on port ${port}\n\n`));

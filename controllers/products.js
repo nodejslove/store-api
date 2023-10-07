@@ -44,7 +44,9 @@ const getAllProducts = async (req, res, next) => {
         queryObject[field] = {};
       }
       const mongoOperator = operatorMap[operator];
-      queryObject[field][mongoOperator] = value;
+      if (mongoOperator) {
+        queryObject[field][mongoOperator] = value;
+      }
     });
   }
   //#endregion numericFilter

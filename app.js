@@ -5,6 +5,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 const logger = require('./middleware/logger');
 const productsRouter = require('./routes/products');
 const connectDB = require('./db/connect');
+const checkLogDirectoryExistance = require('./utils');
 
 const express = require('express');
 const app = express();
@@ -38,6 +39,7 @@ const port = process.env.PORT || 3000;
     console.log(`\tDB name: ${connection.connection.name}`);
     console.log(`---> DB connected(${new Date() - startTime}ms)`);
     console.log('-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
+    await checkLogDirectoryExistance('./logs/logs.json');
     app.listen(port, console.log(`Server is running on port ${port}\n\n`));
   } catch (error) {
     console.log(error);
